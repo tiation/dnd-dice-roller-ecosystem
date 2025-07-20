@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  dice-marketing:
+    build: .
+    container_name: dice-marketing-site
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # Optional: Mount SSL certificates if using HTTPS
+      # - ./ssl:/etc/nginx/ssl:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dice-marketing.rule=Host(`your-domain.com`)"
+      - "traefik.http.services.dice-marketing.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

@@ -1,0 +1,70 @@
+{
+  "name": "tiation-dnd-monorepo",
+  "version": "1.0.0",
+  "description": "Complete D&D gaming ecosystem - dice rollers, character tools, and gaming utilities",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "sites/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "dev:apps": "npm run dev --workspace=apps/*",
+    "dev:sites": "npm run dev --workspace=sites/*",
+    "build": "npm run build:packages && npm run build --workspaces --if-present",
+    "build:packages": "npm run build --workspace=packages/*",
+    "build:apps": "npm run build --workspace=apps/*",
+    "build:sites": "npm run build --workspace=sites/*",
+    "test": "npm run test --workspaces --if-present",
+    "test:unit": "npm run test:unit --workspaces --if-present",
+    "test:integration": "npm run test:integration --workspaces --if-present",
+    "test:e2e": "npm run test:e2e --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "install:all": "npm install --workspaces",
+    "clean": "npm run clean --workspaces --if-present && rm -rf node_modules",
+    "deploy:web": "npm run deploy --workspace=sites/* && npm run deploy --workspace=apps/character-sheets",
+    "release:mobile": "npm run release --workspace=apps/dice-roller-ios && npm run release --workspace=apps/dice-roller-android",
+    "publish:packages": "npm run publish --workspace=packages/*",
+    "postinstall": "npm run build:packages"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.0",
+    "typescript": "^5.1.6"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tiation/tiation-dnd-monorepo.git"
+  },
+  "keywords": [
+    "dnd",
+    "dungeons-dragons",
+    "dice-roller",
+    "character-sheets",
+    "tabletop",
+    "rpg",
+    "gaming",
+    "monorepo"
+  ],
+  "author": "Tiation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tiation/tiation-dnd-monorepo/issues"
+  },
+  "homepage": "https://github.com/tiation/tiation-dnd-monorepo#readme"
+}

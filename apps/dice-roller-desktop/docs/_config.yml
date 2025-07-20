@@ -1,0 +1,57 @@
+# GitHub Pages Configuration for D&D 5E Dice Roller
+title: D&D 5E Dice Roller
+description: Advanced dice roller for D&D and tabletop RPG games with customizable presets
+url: "https://tiation.github.io"
+baseurl: "/dnd_dice_roller"
+
+# Theme
+theme: minima
+minima:
+  skin: dark
+  social_links:
+    github: tiation
+
+# Navigation
+header_pages:
+  - index.md
+  - features.md
+  - privacy.md
+  - support.md
+
+# SEO
+author:
+  name: Tiation
+  email: contact@tiation.com
+
+# Social
+github_username: tiation
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .DS_Store
+  - android/
+  - ios/
+  - build/
+  - "*.gradle"
+  - "*.yaml"
+  - "*.lock"

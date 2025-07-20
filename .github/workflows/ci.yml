@@ -1,0 +1,260 @@
+name: D&D Monorepo CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Shared packages build and test
+  packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build packages
+        run: npm run build:packages
+        
+      - name: Test packages
+        run: npm run test --workspace=packages/*
+        
+      - name: Lint packages
+        run: npm run lint --workspace=packages/*
+
+  # Web applications (React/Next.js)
+  web-apps:
+    needs: packages
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [character-sheets, character-saas, dice-roller-enhanced]
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build ${{ matrix.app }}
+        run: npm run build -w apps/${{ matrix.app }}
+        
+      - name: Test ${{ matrix.app }}
+        run: npm run test -w apps/${{ matrix.app }}
+        
+      - name: E2E Tests ${{ matrix.app }}
+        run: npm run test:e2e -w apps/${{ matrix.app }}
+        if: matrix.app == 'character-sheets'
+
+  # Marketing sites
+  marketing-sites:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        site: [dice-roller-marketing]
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build ${{ matrix.site }}
+        run: npm run build -w sites/${{ matrix.site }}
+        
+      - name: Test ${{ matrix.site }}
+        run: npm run test -w sites/${{ matrix.site }}
+
+  # iOS App Build
+  ios-build:
+    runs-on: macos-latest
+    if: contains(github.event.head_commit.message, '[ios]') || github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+          
+      - name: Build iOS App
+        working-directory: apps/dice-roller-ios
+        run: |
+          xcodebuild -scheme DnDDiceRoller -configuration Debug -sdk iphonesimulator build
+          
+      - name: Run iOS Tests
+        working-directory: apps/dice-roller-ios
+        run: |
+          xcodebuild test -scheme DnDDiceRoller -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest'
+
+  # Android App Build
+  android-build:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[android]') || github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          
+      - name: Install dependencies
+        working-directory: apps/dice-roller-android
+        run: npm ci
+        
+      - name: Build Android App
+        working-directory: apps/dice-roller-android
+        run: |
+          npm run build:android
+
+  # Flutter Desktop App
+  flutter-build:
+    runs-on: ${{ matrix.os }}
+    if: contains(github.event.head_commit.message, '[desktop]') || github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          
+      - name: Install dependencies
+        working-directory: apps/dice-roller-desktop
+        run: flutter pub get
+        
+      - name: Run tests
+        working-directory: apps/dice-roller-desktop
+        run: flutter test
+        
+      - name: Build for ${{ matrix.os }}
+        working-directory: apps/dice-roller-desktop
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            flutter build linux
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            flutter build macos
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            flutter build windows
+          fi
+        shell: bash
+
+  # Asset validation and optimization
+  assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Validate assets
+        run: |
+          echo "Validating character portraits..."
+          find assets/character-portraits -name "*.png" -o -name "*.jpg" -o -name "*.svg" | head -10
+          
+      - name: Optimize images
+        run: npm run optimize:assets
+        if: github.ref == 'refs/heads/main'
+
+  # Security and code quality
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run security audit
+        run: npm audit
+        
+      - name: Check for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          
+      - name: Dependency vulnerability scan
+        run: |
+          npx audit-ci --config audit-ci.json
+
+  # Deployment
+  deploy-web:
+    needs: [packages, web-apps, marketing-sites]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build all web assets
+        run: |
+          npm run build:packages
+          npm run build:sites
+          
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          working-directory: ./sites/dice-roller-marketing
+
+  # Mobile app releases
+  release-mobile:
+    needs: [ios-build, android-build]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: D&D Tools ${{ github.ref }}
+          draft: false
+          prerelease: false

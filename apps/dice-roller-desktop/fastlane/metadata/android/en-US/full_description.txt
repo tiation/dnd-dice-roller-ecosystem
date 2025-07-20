@@ -1,0 +1,42 @@
+Transform your tabletop RPG experience with the ultimate D&D 5E Dice Roller! Perfect for Dungeons & Dragons, Pathfinder, and other tabletop role-playing games.
+
+<b>Key Features:</b>
+🎲 <b>Multiple Dice Types</b>: Roll d4, d6, d8, d10, d12, d20, and d100 dice
+⚔️ <b>Custom Presets</b>: Create personalized quick-roll presets for attacks, damage, and skills
+🎯 <b>Drag & Drop</b>: Easily reorder your favorite presets
+🎨 <b>Visual Customization</b>: Color-coded presets with emoji icons
+📱 <b>Responsive Design</b>: Optimized for phones and tablets
+🔄 <b>Smooth Animations</b>: Fluid dice rolling animations
+⚡ <b>Lightning Fast</b>: Instant dice rolls with haptic feedback
+
+<b>Perfect For:</b>
+• D&D 5th Edition players and DMs
+• Pathfinder enthusiasts
+• Any tabletop RPG system
+• Board game lovers
+• Quick decision making
+
+<b>Preset Features:</b>
+• Custom names and descriptions
+• Dice count and type selection
+• Modifier support (+/-)
+• Visual icons and colors
+• Category organization
+• Drag-and-drop reordering
+
+<b>Technical Excellence:</b>
+• Built with Flutter for smooth performance
+• Material Design 3 compliance
+• Dark mode support
+• Accessibility features
+• Offline functionality
+• Fast startup time
+
+<b>Coming Soon:</b>
+• Roll history and statistics
+• Cloud sync across devices
+• Advanced dice expressions
+• Export/import presets
+• Google Play Games integration
+
+Download now and roll into adventure!

@@ -1,0 +1,210 @@
+:root {
+    --primary-bg: #0a0a0f;
+    --secondary-bg: #12121f;
+    --text-color: #ffffff;
+    --neon-cyan: #00fff2;
+    --neon-magenta: #ff00ff;
+    --gradient: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigation */
+.neon-nav {
+    background: var(--secondary-bg);
+    padding: 1rem 0;
+    border-bottom: 2px solid;
+    border-image: var(--gradient) 1;
+}
+
+.neon-nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-decoration: none;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-left: 2rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--neon-cyan);
+}
+
+/* Hero Section */
+.hero {
+    padding: 6rem 0;
+    text-align: center;
+    background: radial-gradient(circle at center, var(--secondary-bg), var(--primary-bg));
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.glow {
+    text-shadow: 0 0 10px var(--neon-cyan),
+                 0 0 20px var(--neon-cyan),
+                 0 0 30px var(--neon-magenta);
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+/* Features Section */
+.features {
+    padding: 4rem 0;
+    background: var(--secondary-bg);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    padding: 2rem;
+    background: var(--primary-bg);
+    border-radius: 8px;
+    border: 1px solid;
+    border-image: var(--gradient) 1;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Pricing Section */
+.pricing {
+    padding: 4rem 0;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.price-card {
+    padding: 2rem;
+    background: var(--secondary-bg);
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.price-card.featured {
+    border: 2px solid;
+    border-image: var(--gradient) 1;
+}
+
+.price-card:hover {
+    transform: translateY(-5px);
+}
+
+.price {
+    font-size: 2rem;
+    margin: 1rem 0;
+    color: var(--neon-cyan);
+}
+
+.price-card ul {
+    list-style: none;
+    margin: 1.5rem 0;
+}
+
+.price-card li {
+    margin: 0.5rem 0;
+}
+
+/* Buttons */
+.cta-button, .subscribe-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 4px;
+    background: var(--gradient);
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.cta-button:hover, .subscribe-button:hover {
+    opacity: 0.9;
+}
+
+/* Footer */
+footer {
+    background: var(--secondary-bg);
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+.footer-links {
+    margin-top: 1rem;
+}
+
+.footer-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+.footer-links a:hover {
+    color: var(--neon-cyan);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .feature-grid, .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+}

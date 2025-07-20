@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD Dice Roller - Enterprise Android App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(20, 20, 40, 0.9);
+            border-bottom: 2px solid #00ffff;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00ffff;
+        }
+
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: #cccccc;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+        }
+
+        .btn-secondary:hover {
+            background: #00ffff;
+            color: #000;
+        }
+
+        .features {
+            padding: 80px 0;
+            background: rgba(20, 20, 40, 0.5);
+        }
+
+        .features h3 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #00ffff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(10, 10, 30, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #00ffff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00ffff;
+        }
+
+        .screenshots {
+            padding: 80px 0;
+        }
+
+        .screenshots h3 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #00ffff;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .screenshot-card {
+            background: rgba(10, 10, 30, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #333;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-card:hover {
+            border-color: #00ffff;
+            transform: translateY(-5px);
+        }
+
+        .screenshot-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #00ffff20, #ff00ff20);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 15px;
+        }
+
+        .download {
+            padding: 80px 0;
+            text-align: center;
+            background: rgba(20, 20, 40, 0.5);
+        }
+
+        .download h3 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #00ffff;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            background: rgba(10, 10, 30, 0.8);
+            border: 2px solid #00ffff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .download-btn:hover {
+            background: #00ffff;
+            color: #000;
+        }
+
+        .stats {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #cccccc;
+        }
+
+        footer {
+            background: rgba(10, 10, 30, 0.9);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 2px solid #00ffff;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            color: #00ffff;
+            margin-bottom: 15px;
+        }
+
+        .footer-section a {
+            color: #cccccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #00ffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span style="font-size: 2rem;">🎲</span>
+                    <h1>DnD Dice Roller</h1>
+                </div>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#screenshots">Screenshots</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="https://github.com/tiation/DnDDiceRoller">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Roll with Confidence</h2>
+                <p>The ultimate D&D dice rolling companion for Android</p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">
+                        📱 Download Now
+                    </a>
+                    <a href="https://github.com/tiation/DnDDiceRoller" class="btn btn-secondary">
+                        📚 View Documentation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Dice Types</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99</div>
+                        <div class="stat-label">Max Dice Count</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Roll Combinations</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">20</div>
+                        <div class="stat-label">History Entries</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h3>Enterprise-Grade Features</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h4>Multi-Die Rolling</h4>
+                        <p>Roll any combination of D4, D6, D8, D10, D12, D20, and D100 dice with custom quantities and modifiers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h4>Secure Authentication</h4>
+                        <p>User registration and login system with password strength validation and secure session management.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h4>Dark Neon Theme</h4>
+                        <p>Professional dark theme with cyan and magenta gradient accents for an immersive gaming experience.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h4>Mobile Optimized</h4>
+                        <p>Responsive design with touch-friendly controls, keyboard handling, and smooth animations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h4>Roll History</h4>
+                        <p>Track your last 20 rolls with detailed breakdowns, timestamps, and easy-to-read results.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Offline Capable</h4>
+                        <p>Works offline with local storage for user preferences, dice configurations, and roll history.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="screenshots" id="screenshots">
+            <div class="container">
+                <h3>App Screenshots</h3>
+                <div class="screenshots-grid">
+                    <div class="screenshot-card">
+                        <div class="screenshot-placeholder">
+                            Login Screen
+                        </div>
+                        <h4>Secure Login</h4>
+                        <p>Dark neon themed authentication with gradient accents</p>
+                    </div>
+                    <div class="screenshot-card">
+                        <div class="screenshot-placeholder">
+                            Registration Screen
+                        </div>
+                        <h4>User Registration</h4>
+                        <p>Account creation with real-time password strength validation</p>
+                    </div>
+                    <div class="screenshot-card">
+                        <div class="screenshot-placeholder">
+                            Main Dice Roller
+                        </div>
+                        <h4>Dice Rolling Interface</h4>
+                        <p>Intuitive controls for rolling multiple dice with modifiers</p>
+                    </div>
+                    <div class="screenshot-card">
+                        <div class="screenshot-placeholder">
+                            Roll History
+                        </div>
+                        <h4>Roll History</h4>
+                        <p>Track and review your recent dice rolls with timestamps</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="download" id="download">
+            <div class="container">
+                <h3>Download DnD Dice Roller</h3>
+                <p style="margin-bottom: 40px; font-size: 1.2rem; color: #cccccc;">
+                    Get the app on your Android device
+                </p>
+                <div class="download-buttons">
+                    <a href="#" class="download-btn">
+                        <span style="font-size: 2rem;">📱</span>
+                        <div>
+                            <div style="font-size: 0.9rem; color: #cccccc;">Download on</div>
+                            <div style="font-size: 1.2rem; font-weight: 600;">Google Play</div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/tiation/DnDDiceRoller/releases" class="download-btn">
+                        <span style="font-size: 2rem;">⬇️</span>
+                        <div>
+                            <div style="font-size: 0.9rem; color: #cccccc;">Download</div>
+                            <div style="font-size: 1.2rem; font-weight: 600;">Direct APK</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#screenshots">Screenshots</a>
+                    <a href="#download">Download</a>
+                    <a href="https://github.com/tiation/DnDDiceRoller/releases">Releases</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Development</h4>
+                    <a href="https://github.com/tiation/DnDDiceRoller">GitHub Repository</a>
+                    <a href="https://github.com/tiation/DnDDiceRoller/wiki">Wiki</a>
+                    <a href="https://github.com/tiation/DnDDiceRoller/issues">Issues</a>
+                    <a href="https://github.com/tiation/DnDDiceRoller/blob/main/CONTRIBUTING.md">Contributing</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="https://github.com/tiation/DnDDiceRoller/wiki/User-Guide">User Guide</a>
+                    <a href="https://github.com/tiation/DnDDiceRoller/wiki/FAQ">FAQ</a>
+                    <a href="mailto:support@tiation.com">Contact Support</a>
+                    <a href="https://github.com/tiation/DnDDiceRoller/blob/main/SECURITY.md">Security</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="https://github.com/tiation/DnDDiceRoller/blob/main/LICENSE">License</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Code of Conduct</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tiation. All rights reserved. | Built with ❤️ for the D&D community</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Dice Roller Simulator - Roll the Perfect Adventure</title>
+    <meta name="description" content="The ultimate SwiftUI iOS app for D&D dice rolling. Support for all standard dice types, custom dice, roll history, and an intuitive interface for tabletop RPG enthusiasts.">
+    <link rel="stylesheet" href="assets/css/promostyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="nebula"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="dice-icon">🎲</span>
+                <span class="brand-text">Dice Roller</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#screenshots" class="nav-link">Screenshots</a></li>
+                <li><a href="#download" class="nav-link">Download</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Roll Your Way</span>
+                    <span class="accent-text">to Adventure</span>
+                </h1>
+                <p class="hero-subtitle">
+                    The ultimate D&D dice rolling companion app for iOS. 
+                    Experience the thrill of tabletop gaming with our intuitive, 
+                    feature-rich dice simulator.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn-primary">
+                        <span class="btn-text">Get the App</span>
+                        <span class="btn-icon">📱</span>
+                    </a>
+                    <a href="https://github.com/tiation/DiceRollerSimulator" class="btn-secondary">
+                        <span class="btn-text">View on GitHub</span>
+                        <span class="btn-icon">⚡</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-preview">
+                            <div class="dice-display">
+                                <div class="dice d20">20</div>
+                                <div class="dice d12">12</div>
+                                <div class="dice d10">10</div>
+                                <div class="dice d8">8</div>
+                                <div class="dice d6">6</div>
+                                <div class="dice d4">4</div>
+                            </div>
+                            <div class="roll-result">
+                                <span class="result-text">Total: 42</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">Powerful Features</span>
+                <span class="accent-text">for Every Campaign</span>
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Complete Dice Set</h3>
+                    <p>Support for all standard D&D dice types: d4, d6, d8, d10, d12, d20, and d100. Everything you need for any tabletop adventure.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Custom Dice</h3>
+                    <p>Create dice with any number of sides. Perfect for unique game mechanics and homebrew campaigns.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔢</div>
+                    <h3>Multiple Dice Rolling</h3>
+                    <p>Roll up to 99 dice of each type simultaneously. Handle complex spell damage and mass combat with ease.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Roll History</h3>
+                    <p>Track all your rolls with comprehensive history logging. Never lose track of important rolls again.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Intuitive Interface</h3>
+                    <p>Clean, modern design with animated results and flexible layout that works on all iOS devices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>SwiftUI Performance</h3>
+                    <p>Built with SwiftUI for native iOS performance and seamless user experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="screenshots">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">See It</span>
+                <span class="accent-text">in Action</span>
+            </h2>
+            <div class="screenshots-grid">
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        <div class="placeholder-content">
+                            <div class="dice-selector">
+                                <div class="dice-option selected">d20</div>
+                                <div class="dice-option">d12</div>
+                                <div class="dice-option">d10</div>
+                                <div class="dice-option">d8</div>
+                                <div class="dice-option">d6</div>
+                                <div class="dice-option">d4</div>
+                            </div>
+                            <div class="roll-button">ROLL</div>
+                        </div>
+                    </div>
+                    <h3>Dice Selection</h3>
+                    <p>Easily select your dice type and quantity</p>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        <div class="placeholder-content">
+                            <div class="results-grid">
+                                <div class="result-die">18</div>
+                                <div class="result-die">7</div>
+                                <div class="result-die">12</div>
+                                <div class="result-die">3</div>
+                            </div>
+                            <div class="total-result">Total: 40</div>
+                        </div>
+                    </div>
+                    <h3>Roll Results</h3>
+                    <p>Clear display of individual rolls and totals</p>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        <div class="placeholder-content">
+                            <div class="history-list">
+                                <div class="history-item">4d6: 18 [6,5,4,3]</div>
+                                <div class="history-item">1d20: 17</div>
+                                <div class="history-item">2d8: 12 [7,5]</div>
+                                <div class="history-item">1d100: 78</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Roll History</h3>
+                    <p>Complete log of all your rolls</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <div class="download-content">
+                <h2 class="section-title">
+                    <span class="gradient-text">Ready to</span>
+                    <span class="accent-text">Start Rolling?</span>
+                </h2>
+                <p class="download-description">
+                    Get the D&D Dice Roller Simulator now and enhance your tabletop gaming experience. 
+                    Compatible with iOS 15.0+ and optimized for all iPhone and iPad models.
+                </p>
+                <div class="download-buttons">
+                    <a href="https://github.com/tiation/DiceRollerSimulator" class="btn-download">
+                        <span class="download-icon">📥</span>
+                        <div class="download-text">
+                            <span class="download-title">Download from GitHub</span>
+                            <span class="download-subtitle">Open Source & Free</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="requirements">
+                    <h3>System Requirements</h3>
+                    <ul>
+                        <li>iOS 15.0 or later</li>
+                        <li>Xcode 13.0+ (for building)</li>
+                        <li>Swift 5.5+</li>
+                        <li>Compatible with iPhone and iPad</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">
+                    <span class="gradient-text">About</span>
+                    <span class="accent-text">the Project</span>
+                </h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>
+                            The D&D Dice Roller Simulator was created by passionate tabletop RPG enthusiasts 
+                            who wanted to bring the tactile experience of dice rolling into the digital age. 
+                            Built with SwiftUI for native iOS performance, this app combines the convenience 
+                            of digital tools with the excitement of traditional dice rolling.
+                        </p>
+                        <p>
+                            Whether you're a seasoned Dungeon Master managing complex encounters or a new 
+                            player learning the ropes, our app provides all the dice rolling functionality 
+                            you need in an intuitive, beautifully designed package.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/tiation/DiceRollerSimulator" class="project-link">
+                                <span class="link-icon">🔗</span>
+                                <span class="link-text">GitHub Repository</span>
+                            </a>
+                            <a href="https://github.com/tiation/DiceRollerSimulator/blob/master/LICENSE" class="project-link">
+                                <span class="link-icon">📜</span>
+                                <span class="link-text">MIT License</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">Dice Types</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">99</div>
+                            <div class="stat-label">Max Dice Per Roll</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">∞</div>
+                            <div class="stat-label">Custom Dice Sides</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Open Source</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="dice-icon">🎲</span>
+                    <span class="brand-text">D&D Dice Roller</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/tiation/DiceRollerSimulator">GitHub</a>
+                    <a href="https://github.com/tiation/DiceRollerSimulator/issues">Issues</a>
+                    <a href="https://github.com/tiation/DiceRollerSimulator/blob/master/LICENSE">License</a>
+                </div>
+                <div class="footer-text">
+                    <p>Part of the Tiation GitHub ecosystem. Built with ❤️ for tabletop RPG enthusiasts.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

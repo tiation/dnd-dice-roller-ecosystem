@@ -1,0 +1,64 @@
+{
+  "expo": {
+    "name": "DnD Dice Roller",
+    "slug": "dnddiceroller",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "dnddiceroller",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "description": "Professional D&D dice rolling app with advanced features including advantage/disadvantage, exploding dice, and complex expression parsing for tabletop RPG gaming.",
+    "keywords": ["dnd", "dice", "dungeons", "dragons", "rpg", "tabletop", "gaming", "roller"],
+    "privacy": "public",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tiation.dnddiceroller",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "UILaunchStoryboardName": "SplashScreen",
+        "UIRequiresFullScreen": false,
+        "UIStatusBarStyle": "UIStatusBarStyleLightContent",
+        "CFBundleDisplayName": "DnD Dice Roller",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "appStoreUrl": "https://apps.apple.com/app/dnd-dice-roller/id123456789"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.tiation.dnddiceroller",
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.VIBRATE"
+      ],
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.tiation.dnddiceroller"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

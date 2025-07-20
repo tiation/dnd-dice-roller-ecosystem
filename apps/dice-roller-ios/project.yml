@@ -1,0 +1,45 @@
+name: DnDDiceRoller
+options:
+  bundleIdPrefix: com.tiation
+  deploymentTarget:
+    iOS: 15.0
+
+packages:
+  DiceModels:
+    path: DiceModels
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: YOUR_TEAM_ID
+    SWIFT_VERSION: 5.0
+
+targets:
+  DnDDiceRoller:
+    type: application
+    platform: iOS
+    sources:
+      - DnDDiceRoller
+    settings:
+      base:
+        INFOPLIST_FILE: DnDDiceRoller/Resources/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.tiation.dnddiceroller
+    dependencies:
+      - package: DiceModels
+      - sdk: $(SDKROOT)/System/Library/Frameworks/CoreData.framework
+      - sdk: $(SDKROOT)/System/Library/Frameworks/UIKit.framework
+    
+  DnDDiceRollerTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - DnDDiceRollerTests
+    dependencies:
+      - target: DnDDiceRoller
+    
+  DnDDiceRollerUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - DnDDiceRollerUITests
+    dependencies:
+      - target: DnDDiceRoller

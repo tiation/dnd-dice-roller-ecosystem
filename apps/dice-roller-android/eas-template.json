@@ -1,0 +1,48 @@
+{
+  "cli": {
+    "version": ">= 5.9.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "android": {
+        "buildType": "aab"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "./google-service-account.json",
+        "track": "production"
+      },
+      "ios": {
+        "appleId": "YOUR_APPLE_ID@email.com",
+        "ascAppId": "YOUR_APP_STORE_CONNECT_ID",
+        "appleTeamId": "YOUR_APPLE_TEAM_ID"
+      }
+    }
+  }
+}
+
+// INSTRUCTIONS TO FILL THIS OUT AFTER APPLE APPROVAL:
+// 
+// 1. Replace "YOUR_APPLE_ID@email.com" with your Apple Developer email
+// 2. Replace "YOUR_APPLE_TEAM_ID" with your Team ID from Apple Developer portal
+// 3. Replace "YOUR_APP_STORE_CONNECT_ID" with your App ID from App Store Connect
+// 4. Rename this file to "eas.json" (overwrite the existing one)
+//
+// EXAMPLE FILLED OUT:
+// "appleId": "john.doe@example.com",
+// "ascAppId": "1234567890", 
+// "appleTeamId": "ABC123DEF4"

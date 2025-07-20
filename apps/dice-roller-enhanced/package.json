@@ -1,0 +1,28 @@
+{
+  "name": "dnddiceroller-enhanced",
+  "version": "1.0.0",
+  "description": "A comprehensive command-line dice roller for D&D 5e with modifier support, spell casting, and advanced rolling mechanics.",
+  "main": "dnddiceroller.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql": "^2.18.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiation/dnddiceroller-enhanced.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tiation/dnddiceroller-enhanced/issues"
+  },
+  "homepage": "https://github.com/tiation/dnddiceroller-enhanced#readme"
+}

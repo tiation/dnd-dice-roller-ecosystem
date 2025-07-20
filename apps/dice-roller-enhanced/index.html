@@ -1,0 +1,307 @@
+<!DOCTYPE html> <!-- LAST UPDATE: 22 June 2025  -->
+<html lang="en"> 
+  <head> 
+    <meta charset="UTF-8"> 
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="DnD Dice Roller is an online virtual dice roller for Dungeons & Dragons or any tabletop game where dice are required.  Roll any type or combination of D&D dice.">
+    <meta name="keywords" content="dnd,d&amp;d,dnd dice,d&amp;d dice,dnd dice roller,d&amp;d dice roller,dnd dice, dice roller, virtual dice roller, online dice roller">
+    <meta name="author" content="Dice Roller">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P3LKNTW');</script>
+    <!-- End Google Tag Manager --> 
+
+    <link rel="canonical" href="https://www.dnddiceroller.com/">
+    <link rel='shortcut icon' type="image/png" href="favicon.png"/>
+
+    <link rel="stylesheet" type="text/css" href="https://www.dnddiceroller.com/assets/stylesheet.css?1">
+    <link rel="stylesheet" type="text/css" href="diceroller.css?1">
+
+    <script type="text/javascript" src="./blog/wp-content/themes/dnddiceroller/js/navigation.js"></script> 
+    <script type="text/javascript" src="dnddiceroller.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script src="script.js"></script>
+
+    <!-- security script - anti-clickjacking -->
+    <style id="antiClickjack">body{display:none !important;}</style>
+    <script type="text/javascript"> if (self === top) { var antiClickjack = document.getElementById("antiClickjack"); antiClickjack.parentNode.removeChild(antiClickjack); } else { top.location = self.location; } </script>
+
+    <!-- 
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> 
+    -->
+
+    <title>DnD Dice Roller</title> 
+  </head> 
+  <body>  
+  
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P3LKNTW"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+      <div id="body-wrapper">
+      
+      
+        <div id="adsense-left">
+          <!-- <iframe class="adsense-iframe" id="adsense-left" src="./adsense-fixed-160-600.html" frameborder="0" marginheight="0" marginwidth="0" height="600px" width="160px" scrolling="no"></iframe> -->
+        </div> 
+
+        <div id="adsense-right">
+
+          <!-- <iframe class="adsense-iframe" id="adsense-right" src="./adsense-fixed-160-600.html" frameborder="0" marginheight="0" marginwidth="0" height="600px" width="160px" scrolling="no"></iframe> -->
+      
+        </div> 
+
+        <div class="adsense-left"></div>
+
+        <div class="site-wrapper">
+
+          <header class="site-header" role="banner">
+        
+            <div id="title"><a href="https://www.dnddiceroller.com" class="celticg">DND <h1>DICE ROLLER</h1></a></div>
+        
+
+            <div id="subtitle" class="center white">AN <h2>ONLINE DICE ROLLER</h2> FOR DUNGEONS & DRAGONS AND OTHER TABLETOP GAMES</div>
+
+            <div class="menu-toggle">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </div>
+          </header>  
+          <hr>
+
+          <nav class="main-navigation">
+            <ul class="nav-menu center">
+              <li class="menu-item"><a href="https://www.dnddiceroller.com">Home</a></li>
+              <li class="menu-item"><a href="https://blog.dnddiceroller.com">Blog</a></li> 
+              <li class="menu-item"><a href="./donate.php">Donate</a></li> 
+              <li class="menu-item"><a href="./about.php">About</a></li> 
+              <li class="menu-item"><a href="./contact.php">Contact</a></li> 
+            </ul>
+          </nav>   
+          
+          <iframe class="adsense-iframe center" id="adsense-header" src="./adsense-leaderboard.html" frameborder="0" marginheight="0" marginwidth="0" height="280" width="900px" scrolling="no"></iframe>
+
+          <!-- END OF HEADER -->
+
+          <br>
+
+
+          <div id="pane-wrapper">
+        
+          <div class="pane">
+          <div id="roll-dice"><h2>ROLL DICE</h2></div>  
+          <div id="dice-roller">
+
+          <div id="dice-roller-header">
+            <label class="checkbox-wrapper" alt="save" title="toggle save option">
+            <input type="checkbox" name="save" id="save-checkbox" onchange="saveCheckedState(event)"></label>
+            <script>document.getElementById('save-checkbox').insertAdjacentHTML('afterend','\uD83D\uDCBE');</script>
+            <label class="checkbox-wrapper" alt="sound" title="toggle sound option">
+            <input type="checkbox" name="save" id="sound-checkbox" onchange="changeSound(event)"></label> 
+            <script>document.getElementById('sound-checkbox').insertAdjacentHTML('afterend','\uD83D\uDD0A');</script>
+            <button id="expand-all" onclick="expandAll(event)" title="expand all">&#9651;</button>
+          </div>
+
+          <script>loadCheckedState();</script>
+
+          <ul id="dice-list">
+
+          </ul>
+
+          <div id="dice-roller-footer"> 
+            <button id="add-line" class="float-left" onclick="addLine()" title="add a new line">+</button> 
+
+            <button id="roll-all" onclick="clickRollAll();">ALL</button>
+          </div>
+
+          <script>restoreDice();</script>
+
+        </div>
+        
+        <br>
+          <!--
+          <iframe class="adsense-iframe" id="adsense-diceroller" src="./adsense-diceroller.html" frameborder="0" marginheight="0" marginwidth="0" height="90px" width="100%" scrolling="no"></iframe> 
+          -->
+        <br>
+        </div> 
+
+      <div class="pane">
+        <div id="dice-roll-log"><h2>DICE ROLL</h2> LOG</div>
+        <div class="center"><button id="clear-log"  onClick="clearLog()">CLEAR</button></div>
+        <ol id="log-list">
+        <li id="delete">
+          <br>
+          <div class="center">
+          <b><i>You must enable JavaScript to display this site!</i></b>
+          </div>
+        </li>
+        </ol>
+        <script>deleteElement(document.getElementById('delete'));</script>
+        <br>
+        
+        <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+        
+        <!-- Diceroller Footer (Dice Roll Log) 
+        <ins class="adsbygoogle"
+        style="display:inline-block;width:420px;height:90px"
+        data-ad-client="ca-pub-2335555214820366"
+        data-ad-slot="9959471372"></ins>
+        <script> 
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>  -->
+
+      </div> 
+
+      </div> <!-- end pane wrapper -->
+
+      <br> <!-- ad below dice roll log -->
+      <iframe class="adsense-iframe center" id="adsense-header" src="./adsense-leaderboard.html" frameborder="0" marginheight="0" marginwidth="0" height="280" width="900px" scrolling="no"></iframe>
+      <br>
+
+
+      <br>
+
+      <div class="column content">
+      
+      <p><h3></h3>Welcome, brave adventurer, to DnD Dice Roller; your trusty, magical, virtual dice roller forged in the digital fires of Mount Algorithm. Whether you're delving into a cursed dungeon, negotiating with a goblin king, or simply trying to survive your DM's chaotic whims, this online dice roller is here to aid your quest.
+
+    This enchanted dice generator is perfect for rolling bones across any tabletop battlefield, from Dungeons & Dragons to homebrew campaigns and beyond. Designed with both seasoned dungeon crawlers and fresh-faced fledglings in mind, our digital dice simulator lets you roll dice online faster than a halfling rogue can disarm a trap.
+
+    First time visiting? Before you roll a die into the abyss, be sure to peruse the <a href="https://blog.dnddiceroller.com/how-to-use/">how to create</a> scrolls for guidance on conjuring custom dice sets and combining them into deadly combos. Have feedback, spotted a bug that's more beast than code, or wish to request a legendary feature? Summon the Site Administrator by filling out the <a href="./contact.php">contact form</a>.
+
+    <br><br>
+    Now, while most mundane games rely on the humble cube (yes, we're looking at you, d6), true adventurers know there's a pantheon of polyhedral dice waiting in the wings. Need to roll a d6 for damage? Perhaps roll a d20 for that death-saving throw? Or maybe it's time for a chaos-infused d100 for your magical wild surge. Fear not, for this random dice roller handles them all.
+
+    In this realm, dice are labeled using the classic dX notation, where "d" stands for die (singular) or dice (plural), and "X" is the number of sides. 
+    <br>
+    For example:</p>
+
+    <ul class="tab">
+    <br>
+    <li>A classic six-sided die: d6</li>
+    <br>
+    <li>A ten-sided die: d10</li>
+    <br>
+    <li>Rolling three six-sided dice: 3d6</li>
+    <br>
+    <li>Rolling a strength score for a 5e DnD character: 4d6 drop the lowest, and hope the dice gods are merciful.</li>
+    </ul><br>
+    <p><h3></h3>
+    So whether you want to roll dice for initiative, roll d20 to persuade a dragon, or run a dice simulator for 10 goblin attacks at once, you'll find what you need as per the table below:
+
+    </p>
+    <br>
+    </div><br>
+
+    <div id="dice-table"><table>
+    
+    <tr><th><h2>DnD Dice</h2></th></tr>
+    <tr>
+    <td><h3>d2</h3></td><td><img class="diceimage" src="./dice/D[2].png"/></td><td><b>The Coin of Destiny</b><br>This "die" is more of a philosophical debate than a physical object. Technically a two-sided die, but let's be honest, any coin from your pouch will do the trick. Heads or tails? Life or death? Flip it and let fate (or your rogue's questionable morals) decide.</td></tr>
+    <tr>
+    <td><h3>d3</h3></td><td><img class="diceimage" src="./dice/D[3].png"/></td><td><b>The Forgotten Roller</b><br>Shaped like a chonky cylinder with three flat faces, the d3 is the odd duck of the dice world. Rarely seen in the wild, most adventurers just roll a d6 and divide by two, because math is the real magic. Still, if you happen to spot one, roll it quick before it vanishes back into legend.</td></tr>
+    <tr>
+    <td><h3>d4</h3></td><td><img class="diceimage" src="./dice/D[4].png"/></td><td><b>The Rogue's Caltrap</b><br>The dreaded d4. Equal parts dice and foot trap. This little tetrahedron may be tiny, but it packs a punch, especially when stepped on at 2 AM! Common in D&D and essential for daggers, magic missiles, and painful late-night surprises.</td></tr>
+    <tr>
+    <td><h3>d6</h3></td><td><img class="diceimage" src="./dice/D[6].png"/></td><td><b>The Old Reliable</b><br>Ah, the noble cube. Used by gamblers, kings, and kobolds alike, the d6 is the Swiss Army knife of dice. Whether you're slinging firebolt or backstabbing with a short sword, this classic never goes out of style. Simple. Elegant. Dangerous in multiples.</td></tr>
+    <tr>
+    <td><h3>d8</h3></td><td><img class="diceimage" src="./dice/D[8].png"/></td><td><b>Double Pyramids, Double Trouble</b><br>This eight-sided stinger looks like two d4s smooched base-to-base. Often used for weapons that really hurt, like longswords and battleaxes. The d8 says, "I came to crit, and I brought geometry."</td></tr>
+    <tr>
+    <td><h3>d10</h3></td><td><img class="diceimage" src="./dice/D[10].png"/></td><td><b>The Deca-Duelist</b><br>This beauty sports ten sharp faces of probability. Often working in pairs to simulate percentages, the d10 is the bard of the dice set: stylish, versatile, and occasionally confusing. Comes standard with your kit, but might sneak off to join a circus if you're not paying attention.</td></tr>
+    <tr>
+    <td><h3>d12</h3></td><td><img class="diceimage" src="./dice/D[12].png"/></td><td><b>The Forgotten Champion</b><br>Twelve sides of underused glory. It rolls like a dream, feels great in the hand, and yet somehow gets picked last at the initiative lineup. Don't sleep on the d12; it fuels the mighty greataxe and is the barbarian's best friend (after rage and meat, of course).</td></tr>
+    <tr> 
+    <td><h3>d20</h3></td><td><img class="diceimage" src="./dice/D[20].png"/></td><td><b>The Chosen One</b><br>The legendary icosahedron. Twenty faces, one fate. Whether you're critting like a god or failing your persuasion check so hard you get kicked out of a tavern twice, the d20 is the heartbeat of every D&D session. All hail the nat 20 (and curse the dreaded 1).</td></tr>
+    <tr>
+    <td><h3>d100</h3></td><td><img class="diceimage" src="./dice/D[100].png"/></td><td><b>The Orb of Uncertainty</b><br>Behold, the Zocchihedron! A glorified gumball with a hundred tiny numbers. Sure, it's a bit dramatic, and yes, it rolls for days, but when you need to conjure a random result from the multiverse, nothing else will do. Most mortals just use two d10s and call it a day, but rolling this beast is an act of divine chaos.</td></tr>
+    </table></div><br>
+
+    <div class="column content">
+
+    <p><h3></h3>
+      In the ever-chaotic world of tabletop RPGs, there's no telling what kind of dice combo you'll need to pull from your pouch. That's why this <h3>dice roller online</h3> lets you summon any die type imaginable; be it a d2 for a coin toss, a d12 for your barbarian's greataxe, or a massive d20 roll to avoid a gelatinous cube's embrace.
+
+    While nothing quite replaces the satisfaction of clutching your lucky physical dice set, sometimes real life (or your DM's sense of time) demands a faster path. Rolling massive combinations, prepping NPCs, or just speed-running combat? That's where our virtual dice roller shines. Use it as your d6 roller, d20 roller, or to roll a dice army for your next big encounter.
+
+    Whether you're invoking the Google dice roller out of habit or seeking something more heroic, this dnd dice roller is your go-to artifact. It's a dice roller for wizards, warriors, and wild sorcerers alike.
+
+    And hey, if this die roller proves useful in your journey, whether you're a forever DM or a newbie bard who forgot their spell slots, consider donating a few gold coins to keep the servers humming and the goblins coding.
+    <br><br>
+    May your rolls be natural 20s and your snacks be plentiful!
+
+
+    </p><br>
+    </div>
+    <br>
+      <!-- START OF FOOTER -->
+        
+        
+      <!--<div class="amazon-ad" id="amazon-right">
+      <script type="text/javascript">
+        amzn_assoc_placement = "adunit0";
+        amzn_assoc_tracking_id = "gad714-20";
+        amzn_assoc_ad_mode = "manual";
+        amzn_assoc_ad_type = "smart";
+        amzn_assoc_marketplace = "amazon";
+        amzn_assoc_region = "US";
+        amzn_assoc_title = "";
+        amzn_assoc_linkid = "97331647c526a75c527cde4ef37fb10c";
+        amzn_assoc_design = "grid";
+        amzn_assoc_attributes = "true";
+        amzn_assoc_grid_style = "background-color:black;";
+        amzn_assoc_header_style = "font-size: 1.4em; font-weight: bold; color: white;";
+        amzn_assoc_link_style = "color: #990000;text-align:center;";
+        amzn_assoc_text_style = "text-align:center;";
+        amzn_assoc_search_bar = "false";
+        amzn_assoc_prime = "false";
+        amzn_assoc_carousel= "true";
+        amzn_assoc_rows = "5";
+        amzn_assoc_max_ads_in_a_row = "1";
+        amzn_assoc_random_permute = "true";
+        amzn_assoc_asins = "B07RBKZP1Z,B07YX65JRV,0786966629,0786966831,B07P72WLQ8,B06W5JWBWX,B076HCL2VC,B07TWRDPG1,B07D5PBF73,B0713VS9G9,B07GW2195F,B01DN2B10E";
+      </script>
+      <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+      </div> -->
+    
+
+    <br>
+    <div id="footer-wrapper">
+      <footer>
+        
+        <div class="footer-banner">
+          <div id="copy-text">
+            <script>copyrightText();</script>
+          </div>
+          
+          <div class="footer-navigation">
+            <a href="https://www.dnddiceroller.com" title="DnD Dice Roller">Home</a> / 
+            <a href="./terms-of-use.php">Terms</a> / 
+            <a href="./privacy-policy.php">Privacy</a> / 
+            <a href="./contact.php">Contact</a> 
+          </div>
+        </div>
+        
+        <div class="wizards-disclaimer">
+          <p><br><br><sup>
+          Wizards of the Coast, Dungeons & Dragons, and their logos are trademarks of Wizards of the Coast LLC in the United States and other countries. &copy; 2015 Wizards. All Rights Reserved. DnD Dice Roller is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. DnD Dice Roller may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards' <a href="http://dnd.wizards.com/articles/features/fan-site-kit">Fan Site Policy</a>. For example, Dungeons & Dragons&reg; is a trademark of Wizards of the Coast. For more information about Wizards of the Coast or any of Wizards' trademarks or other intellectual property, please visit their website at <a href="http://www.wizards.com">www.wizards.com</a>.</sup>
+          </p>
+        </div>
+
+      </footer>
+    </div> <!-- end footer wrapper -->
+
+    </div> <!-- end of site-wrapper -->
+
+    </div> <!-- end of body-wrapper -->
+
+  </body>
+
+</html>
+

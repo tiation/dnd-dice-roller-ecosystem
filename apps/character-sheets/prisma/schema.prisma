@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  characters Character[]
+  Account    Account[]
+  Session    Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Character {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Basic Info
+  characterName String
+  playerName    String?
+  class         String
+  level         Int      @default(1)
+  background    String?
+  race          String
+  alignment     String?
+  experience    Int      @default(0)
+
+  // Ability Scores
+  strength     Int @default(10)
+  dexterity    Int @default(10)
+  constitution Int @default(10)
+  intelligence Int @default(10)
+  wisdom       Int @default(10)
+  charisma     Int @default(10)
+
+  // Combat Stats
+  armorClass       Int @default(10)
+  initiative       Int @default(0)
+  speed            Int @default(30)
+  hitPointMaximum  Int @default(1)
+  currentHitPoints Int @default(1)
+  temporaryHitPoints Int @default(0)
+  hitDice          String?
+
+  // Death Saves
+  deathSaveSuccesses Int @default(0)
+  deathSaveFailures  Int @default(0)
+
+  // Skills (proficiency booleans)
+  acrobatics      Boolean @default(false)
+  animalHandling  Boolean @default(false)
+  arcana          Boolean @default(false)
+  athletics       Boolean @default(false)
+  deception       Boolean @default(false)
+  history         Boolean @default(false)
+  insight         Boolean @default(false)
+  intimidation    Boolean @default(false)
+  investigation   Boolean @default(false)
+  medicine        Boolean @default(false)
+  nature          Boolean @default(false)
+  perception      Boolean @default(false)
+  performance     Boolean @default(false)
+  persuasion      Boolean @default(false)
+  religion        Boolean @default(false)
+  sleightOfHand   Boolean @default(false)
+  stealth         Boolean @default(false)
+  survival        Boolean @default(false)
+
+  // Saving Throws
+  strengthSave     Boolean @default(false)
+  dexteritySave    Boolean @default(false)
+  constitutionSave Boolean @default(false)
+  intelligenceSave Boolean @default(false)
+  wisdomSave       Boolean @default(false)
+  charismaSave     Boolean @default(false)
+
+  // Additional character details
+  age           String?
+  height        String?
+  weight        String?
+  eyes          String?
+  skin          String?
+  hair          String?
+  backstory     String?
+  personalityTraits String?
+  ideals        String?
+  bonds         String?
+  flaws         String?
+
+  // Features & Traits
+  featuresAndTraits String?
+
+  // Spellcasting
+  spellcastingClass   String?
+  spellcastingAbility String?
+  spellSaveDC         Int?
+  spellAttackBonus    Int?
+  cantrips            String? // JSON string of cantrips
+  preparedSpells      String? // JSON string of prepared spells
+  spellSlots          String? // JSON string of spell slots by level
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  equipment Equipment[]
+  attacks   Attack[]
+}
+
+model Equipment {
+  id          String @id @default(cuid())
+  characterId String
+  name        String
+  quantity    Int    @default(1)
+  weight      Float?
+  description String?
+  
+  character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+}
+
+model Attack {
+  id          String @id @default(cuid())
+  characterId String
+  name        String
+  attackBonus Int?
+  damageType  String?
+  damage      String?
+  
+  character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+}

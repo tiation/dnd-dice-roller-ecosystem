@@ -1,0 +1,10 @@
+# Enhanced D&D Dice Roller - Requirements
+# This project uses only Python standard library modules
+# Python 3.7+ is required for:
+# - dataclasses
+# - typing annotations
+# - argparse
+# - re (regular expressions)
+# - random
+
+# No external dependencies required!

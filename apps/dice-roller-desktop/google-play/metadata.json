@@ -1,0 +1,141 @@
+{
+  "google_play_console": {
+    "app_info": {
+      "package_name": "com.dnd.dice.dnd_dice_roller",
+      "title": "D&D 5E Dice Roller - Tabletop RPG",
+      "short_description": "Advanced dice roller for D&D and tabletop RPG games with customizable presets",
+      "category": "ENTERTAINMENT",
+      "content_rating": "Everyone",
+      "default_language": "en-US",
+      "countries": ["US", "CA", "GB", "AU", "DE", "FR", "ES", "IT", "JP", "KR"]
+    },
+    "version_info": {
+      "version_code": 1,
+      "version_name": "1.0.0",
+      "release_notes": "Initial release with customizable dice rolling presets, drag-and-drop reordering, and smooth animations.",
+      "release_status": "draft"
+    },
+    "app_details": {
+      "website": "https://yourdomain.com",
+      "email": "support@dnddicerroller.com",
+      "phone": "+1-555-0123",
+      "privacy_policy": "https://yourdomain.com/privacy-policy"
+    },
+    "graphics": {
+      "icon": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "feature_graphic": "google-play/graphics/feature_graphic.png",
+      "screenshots": {
+        "phone": [
+          "google-play/screenshots/phone_01.png",
+          "google-play/screenshots/phone_02.png",
+          "google-play/screenshots/phone_03.png",
+          "google-play/screenshots/phone_04.png",
+          "google-play/screenshots/phone_05.png"
+        ],
+        "tablet_7": [
+          "google-play/screenshots/tablet_7_01.png",
+          "google-play/screenshots/tablet_7_02.png"
+        ],
+        "tablet_10": [
+          "google-play/screenshots/tablet_10_01.png",
+          "google-play/screenshots/tablet_10_02.png"
+        ]
+      }
+    },
+    "distribution": {
+      "countries": ["US", "CA", "GB", "AU", "DE", "FR", "ES", "IT", "JP", "KR"],
+      "pricing": "free",
+      "in_app_products": [
+        {
+          "product_id": "premium_upgrade",
+          "title": "Premium Upgrade",
+          "description": "Remove ads and unlock premium features",
+          "price": "$2.99"
+        },
+        {
+          "product_id": "dice_skin_pack",
+          "title": "Premium Dice Skins",
+          "description": "Beautiful dice skins and animations",
+          "price": "$1.99"
+        }
+      ]
+    },
+    "permissions": [
+      "android.permission.VIBRATE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE"
+    ],
+    "features": [
+      "android.hardware.touchscreen",
+      "android.hardware.screen.portrait"
+    ],
+    "testing": {
+      "internal_testing": {
+        "testers": ["internal-testers@yourdomain.com"]
+      },
+      "closed_testing": {
+        "track_name": "alpha",
+        "countries": ["US", "CA"],
+        "testers": ["beta-testers@yourdomain.com"]
+      }
+    }
+  },
+  "google_play_games": {
+    "enabled": true,
+    "leaderboards": [
+      {
+        "id": "most_rolls_leaderboard",
+        "name": "Most Rolls",
+        "order": "descending"
+      },
+      {
+        "id": "highest_roll_leaderboard", 
+        "name": "Highest Single Roll",
+        "order": "descending"
+      }
+    ],
+    "achievements": [
+      {
+        "id": "first_roll_achievement",
+        "name": "First Roll",
+        "description": "Roll your first die",
+        "type": "standard",
+        "points": 10
+      },
+      {
+        "id": "hundred_rolls_achievement",
+        "name": "Century Roller",
+        "description": "Complete 100 dice rolls",
+        "type": "standard",
+        "points": 50
+      },
+      {
+        "id": "natural_twenty_achievement",
+        "name": "Natural Twenty",
+        "description": "Roll a natural 20 on a d20",
+        "type": "standard",
+        "points": 25
+      }
+    ]
+  },
+  "firebase": {
+    "analytics": {
+      "enabled": true,
+      "track_events": [
+        "dice_roll",
+        "preset_created",
+        "preset_edited",
+        "preset_deleted"
+      ]
+    },
+    "crashlytics": {
+      "enabled": true
+    }
+  },
+  "admob": {
+    "enabled": true,
+    "app_id": "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy",
+    "banner_ad_unit": "ca-app-pub-xxxxxxxxxxxxxxxx/zzzzzzzzzz",
+    "interstitial_ad_unit": "ca-app-pub-xxxxxxxxxxxxxxxx/aaaaaaaaaa"
+  }
+}
