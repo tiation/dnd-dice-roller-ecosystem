@@ -2,6 +2,7 @@
   "expo": {
     "name": "DnD Dice Roller",
     "slug": "dnddiceroller",
+    "owner": "tiatheone",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,7 +10,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "description": "Professional D&D dice rolling app with advanced features including advantage/disadvantage, exploding dice, and complex expression parsing for tabletop RPG gaming.",
-    "keywords": ["dnd", "dice", "dungeons", "dragons", "rpg", "tabletop", "gaming", "roller"],
+    "keywords": [
+      "dnd",
+      "dice",
+      "dungeons",
+      "dragons",
+      "rpg",
+      "tabletop",
+      "gaming",
+      "roller"
+    ],
     "privacy": "public",
     "ios": {
       "supportsTablet": true,
@@ -59,6 +69,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b30c2acb-fa9d-4f8e-a4c3-5a777efcbd41"
+      }
     }
   }
 }

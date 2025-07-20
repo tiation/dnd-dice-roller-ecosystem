@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "c376d6ee-d22a-4bde-9ada-9cf46785089d"
+      }
+    },
+    "android": {
+      "package": "com.tiatheone.dnddicerollerecosystem"
+    }
+  }
+}
