@@ -4,9 +4,12 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -76,6 +79,102 @@ fun DiceRollerScreen(
                     isRolling = uiState.isRolling,
                     onRoll = { viewModel.rollDice(diceType) }
                 )
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        // Expression Input
+        var expressionText by remember { mutableStateOf("") }
+        
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xFF2d1b69)
+            )
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = "🎲 Dice Expression",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = EpicGold,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = expressionText,
+                        onValueChange = { expressionText = it },
+                        placeholder = { 
+                            Text(
+                                "e.g., 3d6+2d4-1d8+5",
+                                color = Color.Gray,
+                                fontSize = 14.sp
+                            ) 
+                        },
+                        modifier = Modifier.weight(1f),
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = EpicGold,
+                            unfocusedBorderColor = Color.Gray,
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White
+                        )
+                    )
+                    
+                    Spacer(modifier = Modifier.width(8.dp))
+                    
+                    Button(
+                        onClick = { 
+                            if (expressionText.isNotBlank()) {
+                                viewModel.rollExpression(expressionText)
+                            }
+                        },
+                        enabled = !uiState.isRolling && expressionText.isNotBlank(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = DragonRed
+                        ),
+                        modifier = Modifier.height(56.dp)
+                    ) {
+                        Text("ROLL", color = Color.White, fontWeight = FontWeight.Bold)
+                    }
+                }
+                
+                // Quick Expression Buttons
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    val quickExpressions = listOf(
+                        "2d6+3" to "Sword Attack",
+                        "3d6" to "Fireball", 
+                        "1d8+2d4" to "Mixed Damage",
+                        "4d6k3" to "Ability Score",
+                        "2d20k1" to "Advantage"
+                    )
+                    
+                    items(quickExpressions) { (expr, label) ->
+                        OutlinedButton(
+                            onClick = { expressionText = expr },
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = EpicGold
+                            ),
+                            border = BorderStroke(1.dp, EpicGold),
+                            modifier = Modifier.height(32.dp)
+                        ) {
+                            Text(
+                                text = label,
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
+                }
             }
         }
         

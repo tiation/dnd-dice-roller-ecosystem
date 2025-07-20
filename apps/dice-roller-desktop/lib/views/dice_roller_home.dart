@@ -48,6 +48,17 @@ class _DiceRollerHomeState extends ConsumerState<DiceRollerHome>
     ref.read(appStateNotifierProvider.notifier).addToHistory(formattedResult);
   }
 
+  void _performExpressionRoll(String expression) {
+    _rollAnimationController.forward().then((_) {
+      _rollAnimationController.reset();
+    });
+    
+    final diceRoller = ref.read(diceRollerProvider.notifier);
+    final result = diceRoller.rollExpression(expression);
+    
+    ref.read(appStateNotifierProvider.notifier).addToHistory(result);
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -78,6 +89,8 @@ class _DiceRollerHomeState extends ConsumerState<DiceRollerHome>
                   const Divider(),
                   _buildCustomRollSection(),
                   const Divider(),
+                  _buildExpressionSection(),
+                  const Divider(),
                   SizedBox(
                     height: 400,
                     child: _buildHistorySection(),
@@ -96,6 +109,8 @@ class _DiceRollerHomeState extends ConsumerState<DiceRollerHome>
                         _buildQuickRollSection(),
                         const Divider(),
                         _buildCustomRollSection(),
+                        const Divider(),
+                        _buildExpressionSection(),
                       ],
                     ),
                   ),
@@ -717,6 +732,115 @@ Widget _buildHistorySection() {
             ),
           );
         }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildExpressionSection() {
+    final TextEditingController _expressionController = TextEditingController();
+    
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF2D2D2D),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFF8B0000), width: 1),
+      ),
+      margin: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Dice Expression',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontFamily: 'Roboto',
+            ),
+          ),
+          const SizedBox(height: 16),
+          
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _expressionController,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Roboto',
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'e.g., 3d6+2d4-1d8+5',
+                    hintStyle: const TextStyle(color: Colors.white54),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF8B0000)),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    filled: true,
+                    fillColor: const Color(0xFF3A3A3A),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: () {
+                  if (_expressionController.text.isNotEmpty) {
+                    _performExpressionRoll(_expressionController.text);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF8B0000),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                ),
+                child: const Text('ROLL'),
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: 12),
+          
+          // Quick Expression Buttons
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              _buildQuickExpressionButton('2d6+3', 'Sword Attack', _expressionController),
+              _buildQuickExpressionButton('3d6', 'Fireball', _expressionController),
+              _buildQuickExpressionButton('1d8+2d4', 'Mixed Damage', _expressionController),
+              _buildQuickExpressionButton('4d6k3', 'Ability Score', _expressionController),
+              _buildQuickExpressionButton('2d20kh1', 'Advantage', _expressionController),
+              _buildQuickExpressionButton('2d20kl1', 'Disadvantage', _expressionController),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuickExpressionButton(String expression, String label, TextEditingController controller) {
+    return OutlinedButton(
+      onPressed: () {
+        controller.text = expression;
+      },
+      style: OutlinedButton.styleFrom(
+        foregroundColor: const Color(0xFF00FFFF),
+        side: const BorderSide(color: Color(0xFF00FFFF)),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 12,
+          fontFamily: 'Roboto',
+        ),
       ),
     );
   }

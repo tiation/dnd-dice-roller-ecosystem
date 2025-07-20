@@ -248,6 +248,61 @@ class DiceRoller extends _$DiceRoller {
     );
   }
 
+  String rollExpression(String expression) {
+    // Parse dice expression like "3d6+2d4-1d8+5"
+    final parts = expression.replaceAll(' ', '').split(RegExp(r'(?=[+-])'));
+    int totalResult = 0;
+    List<String> resultParts = [];
+    
+    for (String part in parts) {
+      if (part.isEmpty) continue;
+      
+      bool isAddition = !part.startsWith('-');
+      String cleanPart = part.replaceAll(RegExp(r'^[+-]'), '');
+      
+      if (cleanPart.contains('d')) {
+        // Dice roll (e.g., "3d6")
+        final diceParts = cleanPart.split('d');
+        if (diceParts.length == 2) {
+          final count = int.tryParse(diceParts[0]) ?? 1;
+          final sides = int.tryParse(diceParts[1]) ?? 6;
+          
+          final rolls = rollDice(sides, count);
+          final rollTotal = rolls.fold(0, (sum, roll) => sum + roll);
+          
+          if (isAddition) {
+            totalResult += rollTotal;
+            resultParts.add('${count}d$sides(${rolls.join('+')})=$rollTotal');
+          } else {
+            totalResult -= rollTotal;
+            resultParts.add('-${count}d$sides(${rolls.join('+')})=-$rollTotal');
+          }
+        }
+      } else {
+        // Modifier (e.g., "+5" or "-2")
+        final modifier = int.tryParse(cleanPart) ?? 0;
+        if (isAddition) {
+          totalResult += modifier;
+          resultParts.add('+$modifier');
+        } else {
+          totalResult -= modifier;
+          resultParts.add('-$modifier');
+        }
+      }
+    }
+    
+    String resultText = '$expression: ${resultParts.join(' ')} = $totalResult';
+    
+    // Check for critical hits on d20s
+    if (expression.contains('d20') && totalResult >= 20) {
+      resultText += ' 🎯';
+    } else if (expression.contains('d20') && totalResult <= 1) {
+      resultText += ' 💥';
+    }
+    
+    return resultText;
+  }
+
   String formatRollResult(RollResult result, int sides, int count, int modifier, String description) {
     final rollText = description.isEmpty ? 
       '${count}d$sides${modifier != 0 ? (modifier > 0 ? '+$modifier' : '$modifier') : ''}' : 
