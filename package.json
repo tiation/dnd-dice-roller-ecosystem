@@ -1,0 +1,53 @@
+{
+  "name": "dnd-dice-roller-ecosystem",
+  "version": "1.0.0",
+  "description": "Complete D&D dice rolling ecosystem with web platform, native mobile apps, and advanced gaming features",
+  "private": true,
+  "workspaces": [
+    "web-platform",
+    "android-app/promotional-site",
+    "ios-app/promotional-site"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=web-platform",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces",
+    "test": "npm run test --workspaces",
+    "deploy:web": "./scripts/deploy-web.sh",
+    "deploy:android": "./scripts/deploy-android.sh",
+    "deploy:ios": "./scripts/deploy-ios.sh",
+    "setup": "npm install && npm run setup --workspaces"
+  },
+  "keywords": [
+    "dnd",
+    "dice-roller",
+    "dungeons-and-dragons",
+    "tabletop-gaming",
+    "rpg",
+    "gaming",
+    "web-app",
+    "android-app", 
+    "ios-app",
+    "monorepo"
+  ],
+  "author": "Tiation <support@tiation.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/tiation/dnd-dice-roller-ecosystem",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiation/dnd-dice-roller-ecosystem.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tiation/dnd-dice-roller-ecosystem/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  }
+}

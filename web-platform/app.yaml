@@ -1,0 +1,16 @@
+runtime: nodejs20
+
+env_variables:
+  DATABASE_URL: "file:./dev.db"
+  NEXTAUTH_SECRET: "W9PEDJO+kkMSg7Vh1IM6sJ+qAf+koGEKrx3l3HNPlac="
+  NEXTAUTH_URL: "https://tiation-enterprise.uc.r.appspot.com"
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+  target_cpu_utilization: 0.6
+  target_throughput_utilization: 0.6
+
+resources:
+  cpu: 1
+  memory_gb: 1

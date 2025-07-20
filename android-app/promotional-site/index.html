@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ D&D Dice Roller - Epic Android App</title>
+    <meta name="description" content="The ultimate D&D dice rolling companion for Android. Roll with epic animations, track your adventures, and bring magic to your tabletop games.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a0033, #330066, #4c0099);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #fbbf24;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 10px #fbbf24; }
+            to { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px #fbbf24, 0 0 30px #fbbf24; }
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #a855f7, #dc2626);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.4);
+        }
+        
+        .features {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #fbbf24;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(45, 27, 105, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #a855f7;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(168, 85, 247, 0.3);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+        
+        .dice-demo {
+            text-align: center;
+            padding: 80px 20px;
+            background: rgba(26, 0, 51, 0.8);
+        }
+        
+        .dice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        
+        .dice {
+            font-size: 4rem;
+            padding: 20px;
+            background: rgba(76, 29, 149, 0.8);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .dice:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            margin-top: 80px;
+        }
+        
+        .screenshots {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+        
+        .screenshot {
+            background: rgba(45, 27, 105, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #a855f7;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #fbbf24;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .dice { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>⚔️ D&D Dice Roller ⚔️</h1>
+        <p>The ultimate digital companion for your tabletop adventures. Roll with epic animations, track your history, and bring the magic of D&D to your Android device.</p>
+        
+        <a href="https://play.google.com/store/apps/details?id=com.tiation.dnddiceroller" class="download-btn">
+            📱 Download on Google Play
+        </a>
+        <a href="#features" class="download-btn">
+            🎲 Learn More
+        </a>
+    </section>
+    
+    <section class="dice-demo">
+        <h2>🎲 Experience Epic Dice Rolling</h2>
+        <div class="dice-grid">
+            <div class="dice" title="d4">🔸</div>
+            <div class="dice" title="d6">⚀</div>
+            <div class="dice" title="d8">🔶</div>
+            <div class="dice" title="d10">🔟</div>
+            <div class="dice" title="d12">🔷</div>
+            <div class="dice" title="d20">🎲</div>
+            <div class="dice" title="d100">💯</div>
+        </div>
+        <p style="margin-top: 20px; font-size: 1.2rem;">Tap any die above to see them in action! (Preview only)</p>
+    </section>
+    
+    <section id="features" class="features">
+        <h2>🌟 Legendary Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🎲 Complete Dice Set</h3>
+                <p>Roll d4, d6, d8, d10, d12, d20, and d100 with stunning physics-based animations that bring your rolls to life.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>✨ Epic Animations</h3>
+                <p>Watch dice tumble and spin with realistic physics. Every roll feels magical with glowing effects and smooth transitions.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📜 Roll History</h3>
+                <p>Track your adventure with comprehensive roll history. Never lose track of that critical hit or saving throw again!</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🔊 Immersive Sound</h3>
+                <p>Hear the satisfying clatter of dice with authentic sound effects. Toggle on/off based on your preference.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>⚡ Lightning Fast</h3>
+                <p>Optimized for quick gameplay. No loading screens, no delays - just instant dice rolling when you need it most.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🎨 D&D Themed</h3>
+                <p>Beautifully crafted with authentic D&D aesthetics. Gold highlights, mystical purples, and fantasy typography.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="screenshots">
+        <h2>📱 App Screenshots</h2>
+        <div class="screenshot-grid">
+            <div class="screenshot">🎲<br>Main Screen</div>
+            <div class="screenshot">📊<br>Roll Results</div>
+            <div class="screenshot">📜<br>History View</div>
+        </div>
+        <p style="margin-top: 30px; font-style: italic;">Screenshots coming soon! Download the app to experience the magic.</p>
+    </section>
+    
+    <footer class="footer">
+        <h3>🏰 Join the Adventure</h3>
+        <p>Ready to elevate your D&D sessions? Download now and experience the most epic dice rolling app on Android!</p>
+        
+        <a href="https://play.google.com/store/apps/details?id=com.tiation.dnddiceroller" class="download-btn" style="margin-top: 20px;">
+            ⬇️ Get D&D Dice Roller
+        </a>
+        
+        <div style="margin-top: 40px; font-size: 0.9rem; color: #cbd5e1;">
+            <p>&copy; 2024 Tiation. All rights reserved.</p>
+            <p>D&D and Dungeons & Dragons are trademarks of Wizards of the Coast LLC.</p>
+            <a href="privacy-policy.html" style="color: #fbbf24; margin: 0 10px;">Privacy Policy</a>
+            <a href="mailto:support@tiation.com" style="color: #fbbf24; margin: 0 10px;">Contact Support</a>
+        </div>
+    </footer>
+    
+    <script>
+        // Add some interactive dice rolling effects
+        document.querySelectorAll('.dice').forEach(dice => {
+            dice.addEventListener('click', function() {
+                this.style.transform = 'scale(1.2) rotate(' + Math.random() * 360 + 'deg)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                }, 300);
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
