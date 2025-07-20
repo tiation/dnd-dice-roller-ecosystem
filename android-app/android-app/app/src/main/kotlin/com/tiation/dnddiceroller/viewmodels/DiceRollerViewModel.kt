@@ -7,93 +7,127 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import com.tiation.dnddiceroller.data.DiceType
-import com.tiation.dnddiceroller.data.RollResult
+import com.tiation.dnddiceroller.data.*
 import javax.inject.Inject
 import kotlin.random.Random
 
 data class DiceRollerUiState(
     val lastRoll: RollResult? = null,
-    val rollHistory: List<RollResult> = emptyList(),
+    val rollHistory: List<RollHistoryEntry> = emptyList(),
     val isRolling: Boolean = false,
-    val soundEnabled: Boolean = true
+    val soundEnabled: Boolean = true,
+    val showHistory: Boolean = false,
+    val sessionSummary: SessionSummary? = null,
+    val campaignStats: CampaignStats = CampaignStats()
 )
 
 @HiltViewModel
-class DiceRollerViewModel @Inject constructor() : ViewModel() {
+class DiceRollerViewModel @Inject constructor(
+    private val diceEngine: AdvancedDiceEngine,
+    private val rollHistoryManager: RollHistoryManager
+) : ViewModel() {
     
     private val _uiState = MutableStateFlow(DiceRollerUiState())
-    val uiState: StateFlow<DiceRollerUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<DiceRollerUiState> = combine(
+        _uiState,
+        rollHistoryManager.rollHistory,
+        rollHistoryManager.campaignStats
+    ) { state, history, stats ->
+        state.copy(
+            rollHistory = history,
+            campaignStats = stats,
+            sessionSummary = rollHistoryManager.getSessionSummary()
+        )
+    }.stateIn(
+        viewModelScope,
+        kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
+        DiceRollerUiState()
+    )
     
-    fun rollDice(diceType: DiceType) {
+    fun rollDice(diceType: DiceType, rollType: RollType = RollType.NORMAL) {
         if (_uiState.value.isRolling) return
         
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isRolling = true)
             
-            // Animate rolling for 1 second
+            // Add rolling animation delay
             delay(1000)
             
-            val result = Random.nextInt(1, diceType.sides + 1)
-            val rollResult = RollResult(
-                diceType = diceType,
-                result = result,
-                breakdown = "Rolled ${diceType.name}: $result"
-            )
-            
-            val currentHistory = _uiState.value.rollHistory.toMutableList()
-            currentHistory.add(0, rollResult) // Add to beginning
-            if (currentHistory.size > 50) { // Keep last 50 rolls
-                currentHistory.removeAt(currentHistory.size - 1)
+            val rolls = when (rollType) {
+                RollType.ADVANTAGE -> diceEngine.rollWithAdvantage(diceType.sides)
+                RollType.DISADVANTAGE -> diceEngine.rollWithDisadvantage(diceType.sides)
+                RollType.EXPLODING -> DiceRoll(
+                    rolls = diceEngine.rollSingle(diceType.sides, exploding = true),
+                    total = 0,
+                    exploding = true
+                ).let { it.copy(total = it.rolls.sum()) }
+                else -> {
+                    val rollList = diceEngine.rollSingle(diceType.sides)
+                    DiceRoll(rolls = rollList, total = rollList.sum())
+                }
             }
             
+            val result = RollResult(
+                diceType = diceType,
+                result = rolls.total,
+                breakdown = buildRollBreakdown(rolls, rollType)
+            )
+            
+            // Add to history
+            rollHistoryManager.addRollToHistory(
+                label = "${diceType.name} Roll",
+                diceConfiguration = buildDiceConfiguration(diceType, rollType),
+                roll = rolls,
+                rollType = rollType
+            )
+            
             _uiState.value = _uiState.value.copy(
-                lastRoll = rollResult,
-                rollHistory = currentHistory,
-                isRolling = false
+                isRolling = false,
+                lastRoll = result
             )
         }
     }
     
-    fun rollMultiple(diceType: DiceType, count: Int, modifier: Int = 0) {
+    fun rollAdvantage(diceType: DiceType) = rollDice(diceType, RollType.ADVANTAGE)
+    fun rollDisadvantage(diceType: DiceType) = rollDice(diceType, RollType.DISADVANTAGE)
+    fun rollExploding(diceType: DiceType) = rollDice(diceType, RollType.EXPLODING)
+    
+    fun rollExpression(expression: String) {
         if (_uiState.value.isRolling) return
         
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isRolling = true)
             delay(1000)
             
-            val rolls = mutableListOf<Int>()
-            repeat(count) {
-                rolls.add(Random.nextInt(1, diceType.sides + 1))
-            }
+            val diceLines = diceEngine.parseExpression(expression)
+            var totalResult = 0
+            val allRolls = mutableListOf<String>()
             
-            val total = rolls.sum() + modifier
-            val breakdown = buildString {
-                append("${count}${diceType.name}: ")
-                append(rolls.joinToString(" + "))
-                if (modifier != 0) {
-                    append(" + $modifier")
+            diceLines.forEach { diceLine ->
+                val roll = diceEngine.rollDiceLine(diceLine)
+                diceLine.result = roll
+                rollHistoryManager.addDiceLineToHistory(diceLine)
+                
+                when (diceLine.operation) {
+                    "add" -> totalResult += roll.total
+                    "subtract" -> totalResult -= roll.total
                 }
-                append(" = $total")
+                
+                allRolls.add("${diceLine.diceCount}d${diceLine.diceType.sides}: ${roll.rolls.joinToString(",")}")
             }
             
-            val rollResult = RollResult(
-                diceType = diceType,
-                result = total,
-                breakdown = breakdown
+            val result = RollResult(
+                diceType = DiceType.D20,
+                result = totalResult,
+                breakdown = "Expression: $expression\n${allRolls.joinToString("\n")}"
             )
             
-            val currentHistory = _uiState.value.rollHistory.toMutableList()
-            currentHistory.add(0, rollResult)
-            if (currentHistory.size > 50) {
-                currentHistory.removeAt(currentHistory.size - 1)
-            }
-            
             _uiState.value = _uiState.value.copy(
-                lastRoll = rollResult,
-                rollHistory = currentHistory,
-                isRolling = false
+                isRolling = false,
+                lastRoll = result
             )
         }
     }
@@ -105,10 +139,49 @@ class DiceRollerViewModel @Inject constructor() : ViewModel() {
     }
     
     fun showHistory() {
-        // TODO: Navigate to history screen
+        _uiState.value = _uiState.value.copy(showHistory = true)
+    }
+    
+    fun hideHistory() {
+        _uiState.value = _uiState.value.copy(showHistory = false)
     }
     
     fun clearHistory() {
-        _uiState.value = _uiState.value.copy(rollHistory = emptyList())
+        rollHistoryManager.clearHistory()
+    }
+    
+    fun exportHistory(): String {
+        return rollHistoryManager.exportHistoryAsText()
+    }
+    
+    private fun buildRollBreakdown(roll: DiceRoll, rollType: RollType): String {
+        return buildString {
+            if (roll.rolls.size > 1) {
+                append("Rolls: ${roll.rolls.joinToString(", ")}")
+            }
+            
+            when (rollType) {
+                RollType.ADVANTAGE -> append(" (Advantage)")
+                RollType.DISADVANTAGE -> append(" (Disadvantage)")  
+                RollType.EXPLODING -> append(" (Exploding)")
+                else -> {}
+            }
+            
+            if (roll.modifier != 0) {
+                append(" ${if (roll.modifier > 0) "+" else ""}${roll.modifier}")
+            }
+        }
+    }
+    
+    private fun buildDiceConfiguration(diceType: DiceType, rollType: RollType): String {
+        return buildString {
+            append("1d${diceType.sides}")
+            when (rollType) {
+                RollType.ADVANTAGE -> append(" (Advantage)")
+                RollType.DISADVANTAGE -> append(" (Disadvantage)")
+                RollType.EXPLODING -> append(" (Exploding)")
+                else -> {}
+            }
+        }
     }
 }
